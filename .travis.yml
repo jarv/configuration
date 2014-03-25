@@ -4,9 +4,8 @@ python:
 install:
   - "pip install --allow-all-external -r requirements.txt"
   - "sudo apt-get install -y npm"
-  - "sudo npm install js-yaml"
+  - "sudo npm install -g js-yaml"
 script: |
-  JS_YAML="node_modules/js-yaml/bin/js-yaml.js"
   cd playbooks/edx-east
   ansible-playbook -i localhost, --syntax-check edxapp.yml
-  $JS_YAML -c edxapp.yml
+  js-yaml -c edxapp.yml
