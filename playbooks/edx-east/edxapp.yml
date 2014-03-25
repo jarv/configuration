@@ -1,6 +1,6 @@
 # adding another comment
 - name: Deploy edxapp
-  hosts: all
+-  hosts: all
   sudo: True
   gather_facts: True
   vars:
