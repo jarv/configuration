@@ -3,12 +3,21 @@ python:
   - "2.6"
 install:
   - "pip install --allow-all-external -r requirements.txt"
+  - "sudo apt-get install -y npm"
+  - "sudo npm install -g js-yaml"
 script:
   - |
-    set -x
-    cd playbooks/edx-east
-    for play in *.yml; do
-      if ! grep -q "vars_prompt" $play; then
-        ansible-playbook -i localhost, --syntax-check --list-tasks $play
+    for yml in $(find . -name "*.yml"); do
+      js-yaml $yml >/dev/null
+      if [[ $? -ne 0 ]]; then
+        echo "ERROR parsing $yml"
+        exit 1
       fi
+    done
+  - |
+    plays="aws bastion certs commoncluster common demo devpi discern edx_ansible edxapp elasticsearch forum ora rabbitmq worker xqueue xserver"
+    set -e
+    cd playbooks/edx-east
+    for play in $plays; do
+      ansible-playbook -i localhost, --syntax-check ${play}.yml
     done
