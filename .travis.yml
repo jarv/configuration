@@ -8,4 +8,4 @@ install:
 script: |
   cd playbooks/edx-east
   ansible-playbook -i localhost, --syntax-check edxapp.yml
-  js-yml -c edxapp.yml
+  js-yaml -c edxapp.yml
